@@ -1,0 +1,132 @@
+ <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        
+        <!-- ENCABEZADO DE MÓDULO -->
+        <header class="page-header">
+            <div>
+                <h1>Administración de Usuarios</h1>
+                <p>Gestiona los niveles de acceso del personal interno y los permisos de los residentes titulares.</p>
+            </div>
+            
+            <button matButton="elevated" style="width: 250px;">
+                Nuevo Usuario
+            </button>            
+        </header>
+
+        <!-- CONTENEDOR DE TABLA DE ROLES -->
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Usuario / Identidad</th>
+                        <th>Rol de Sistema</th>
+                        <th>Unidad Asignada</th>
+                        <th>Fecha de Alta</th>
+                        <th>Estado</th>
+                        <th style="text-align: right;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- USUARIO 1: ROL ADMINISTRADOR -->
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <span class="user-name">Alejandro Vance</span>
+                                <span class="user-email">a.vance@oasisenterprise.com</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge1 badge-admin1">Administrador</span>
+                        </td>
+                        <td>
+                            <span class="meta-text">— (Oficina Central)</span>
+                        </td>
+                        <td>12/Ene/2026</td>
+                        <td>
+                            <span class="status-dot">Activo</span>
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <button class="btn btn-secondary">Gestionar Permisos</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- USUARIO 2: ROL TITULAR -->
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <span class="user-name">Carlos Mendoza</span>
+                                <span class="user-email">carlos.mendoza@email.com</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-badge-admin badge-titular">Titular</span>
+                        </td>
+                        <td>
+                            <span class="meta-text">TORRE A - U-14B</span>
+                        </td>
+                        <td>24/Mar/2026</td>
+                        <td>
+                            <span class="status-dot">Activo</span>
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <button class="btn btn-secondary">Modificar Acceso</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- USUARIO 3: ROL ADMINISTRADOR -->
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <span class="user-name">Mariana Gómez</span>
+                                <span class="user-email">m.gomez@oasisenterprise.com</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-admin">Administrador</span>
+                        </td>
+                        <td>
+                            <span class="meta-text">— (Mesa de Control)</span>
+                        </td>
+                        <td>02/Feb/2026</td>
+                        <td>
+                            <span class="status-dot">Activo</span>
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <button class="btn btn-secondary">Gestionar Permisos</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- USUARIO 4: ROL TITULAR -->
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <span class="user-name">Elena Rostova</span>
+                                <span class="user-email">elena.ros@email.com</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-badge-admin badge-titular">Titular</span>
+                        </td>
+                        <td>
+                            <span class="meta-text">VILLAS - V-03</span>
+                        </td>
+                        <td>18/May/2026</td>
+                        <td>
+                            <span class="status-dot">Activo</span>
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <button class="btn btn-secondary">Modificar Acceso</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>

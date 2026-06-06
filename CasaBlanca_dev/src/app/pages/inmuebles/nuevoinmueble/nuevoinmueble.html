@@ -1,0 +1,85 @@
+<mat-dialog-content>
+    <!-- CONTENIDO DE CAPTURA -->
+    <main class="main-contentx">
+
+        <div class="form-container">
+            <!-- ENCABEZADO -->
+            <div class="form-header">
+                <h1>Dar de Alta Nueva Unidad</h1>
+            </div>
+
+            <!-- TARJETA DEL FORMULARIO -->
+            <form class="form-card" onsubmit="event.preventDefault();">
+                
+                <!-- SECCIÓN 2: DATOS ESTRUCTURALES -->
+                <div class="form-section">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="codigo-unidad">Número Casa</label>
+                            <input type="text" id="codigo-unidad" placeholder="Ej. 99A" style="font-family: monospace; text-transform: uppercase;" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bloque">Ubicación (Bloque / Torre)</label>
+                            <input type="text" id="bloque" placeholder="Ej. Torre A, Sección Villas" required>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: CONFIGURACIÓN FINANCIERA E INQUILINO -->
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cuota-base">Cuota de Mantenimiento Base</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="input-prefix">$</span>
+                                <input type="number" id="cuota-base" placeholder="0.00" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado-inicial">Estado Inicial de Ocupación</label>
+                            <select id="estado-inicial">
+                                <option value="deshabitado">Deshabitado (Disponible)</option>
+                                <option value="ocupado">Ocupado (Asignar Titular)</option>
+                                <option value="mantenimiento">En Remodelación / No disponible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombre-residente">Nombre del Titular</label>
+                            <input type="text" id="nombre-residente" placeholder="Ej. Carlos Mendoza">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombre-residente">Apellidos del Residente </label>
+                            <input type="text" id="nombre-residente" placeholder="Ej. Carlos Mendoza">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="correo-residente">Correo Electrónico de Contacto</label>
+                            <input type="text" id="correo-residente" placeholder="ejemplo@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono-residente">Teléfono / Celular</label>
+                            <input type="text" id="telefono-residente" placeholder="+52 ...">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="observaciones">Observaciones de Entrega / Notas del Inmueble</label>
+                            <textarea id="observaciones" placeholder="Detalles de inventario, cajones de estacionamiento asignados, bodegas anexas..."></textarea>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    
+    </main>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button [mat-dialog-close]="false" >Cancelar</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary" class="btn-confirm">Guardar Registro</button>
+</mat-dialog-actions>

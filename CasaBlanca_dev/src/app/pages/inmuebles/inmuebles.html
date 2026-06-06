@@ -1,0 +1,133 @@
+<!-- CONTENIDO PRINCIPAL -->
+<main class="main-content">
+    <header>
+        <div>
+            <h1>Gestión de Inmuebles</h1>
+        </div>
+        <div class="header-actions">
+            <button mat-raised-button color="primary" (click)="abrirPopup()">
+                Dar de Alta Unidad
+            </button>
+        </div>
+    </header>
+
+    <!-- INDICADORES CLAVE DEL PARQUE INMOBILIARIO -->
+    <section class="analytics-grid">
+        <div class="metric-card">
+            <div class="metric-label">Total de Casas</div>
+            <div class="metric-value">{{ totalRegistros }}</div>
+        </div>
+        <div class="metric-card card-total-ingresos">
+            <div class="metric-label ">Tasa de Ocupación</div>
+            <div class="metric-value" style="color: var(--text-badge-success);">94.1%</div>
+        </div>
+        <div class="metric-card card-total-ingresos">
+            <div class="metric-label">Unidades con Adeudos</div>
+            <div class="metric-value" style="color: var(--text-badge-danger);">7</div>
+        </div>
+    </section>
+
+    <!-- TABLA DE CONTROL OPERATIVO -->
+    <section class="table-container">
+        <div class="table-header-area">
+            <div class="table-title">Directorio de Casas</div>
+            <select class="filter-select" style="padding: 6px 12px; font-size: 0.8rem;">
+                <option value="all-status">Todos los estados financieros</option>
+                <option value="clean">Al corriente</option>
+                <option value="debt">Con retraso</option>
+                <option value="empty">Deshabitadas</option>
+            </select>
+        </div>
+
+        <!-- TABLA DE DATOS DE INMUEBLES -->
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+            <!-- Número de Casa -->
+            <ng-container matColumnDef="numeroCasa">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Casa </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.numeroCasa }} </td>
+            </ng-container>
+
+            <!-- Cuota de Mantenimiento -->
+            <ng-container matColumnDef="cuotaDeMantenimientoBase">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cuota de Mantenimiento </th>
+                <td mat-cell *matCellDef="let casa">
+                    {{ casa.cuotaDeMantenimientoBase | currency:'':'symbol':'1.2-2' }}
+                </td>
+            </ng-container>
+
+            <!-- Estado -->
+            <ng-container matColumnDef="estadoInicialOcupacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado de Ocupación </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.estadoInicialOcupacion }} </td>
+            </ng-container>
+
+            <!-- Titular -->
+            <ng-container matColumnDef="nombreTitular">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Titular </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.nombreTitular || 'Sin titular' }} </td>
+            </ng-container>
+
+            <!-- Email Titular -->
+            <ng-container matColumnDef="emailTitular">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Titular </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.emailTitular || 'No registrado' }} </td>
+            </ng-container>
+
+            <!-- Celular Titular -->
+            <ng-container matColumnDef="celularTitular">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular Titular </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.celularTitular || 'No registrado' }} </td>
+            </ng-container>
+
+            <!-- Ocupante -->
+            <ng-container matColumnDef="nombreOcupante">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Ocupante </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.nombreOcupante || 'N/A' }} </td>
+            </ng-container>
+
+            <!-- Email Ocupante -->
+            <ng-container matColumnDef="emailOcupante">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Ocupante </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.emailOcupante || 'N/A' }} </td>
+            </ng-container>
+
+            <!-- Celular Ocupante -->
+            <ng-container matColumnDef="celularOcupante">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular Ocupante </th>
+                <td mat-cell *matCellDef="let casa"> {{ casa.celularOcupante || 'N/A' }} </td>
+            </ng-container>
+
+            <!-- Habitantes -->
+            <ng-container matColumnDef="numeroHabitantes">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Habitantes </th>
+                <td mat-cell *matCellDef="let casa" style="text-align: center;">
+                    {{ casa.numeroHabitantes ?? 0 }}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+
+
+        <!-- <table mat-table [dataSource]="casas()" class="mat-elevation-z8">
+            <mat-text-column name="id" headerText="ID"></mat-text-column>
+            <mat-text-column name="numeroCasa" headerText="Casa Núm.."></mat-text-column>
+            <mat-text-column name="cuotaDeMantenimientoBase" headerText="Mantenimiento"></mat-text-column>
+            <mat-text-column name="estadoInicialOcupacion" headerText="Estado Ocupación"></mat-text-column>
+            <mat-text-column name="nombreTitular" headerText="Nombre Titular"></mat-text-column>
+            <mat-text-column name="emailTitular" headerText="Email Titular"></mat-text-column>
+            <mat-text-column name="celularTitular" headerText="Celular Titular"></mat-text-column>
+            <mat-text-column name="nombreOcupante" headerText="Nombre Ocupante"></mat-text-column>
+            <mat-text-column name="emailOcupante" headerText="Email Ocupante"></mat-text-column>
+            <mat-text-column name="celularOcupante" headerText="Celular Ocupante"></mat-text-column>
+            <mat-text-column name="numeroHabitantes" headerText="Habitantes"></mat-text-column>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table> -->
+
+    </section>
+</main>
