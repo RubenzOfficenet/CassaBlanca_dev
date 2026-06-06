@@ -110,24 +110,11 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         </table>
-
-
-        <!-- <table mat-table [dataSource]="casas()" class="mat-elevation-z8">
-            <mat-text-column name="id" headerText="ID"></mat-text-column>
-            <mat-text-column name="numeroCasa" headerText="Casa Núm.."></mat-text-column>
-            <mat-text-column name="cuotaDeMantenimientoBase" headerText="Mantenimiento"></mat-text-column>
-            <mat-text-column name="estadoInicialOcupacion" headerText="Estado Ocupación"></mat-text-column>
-            <mat-text-column name="nombreTitular" headerText="Nombre Titular"></mat-text-column>
-            <mat-text-column name="emailTitular" headerText="Email Titular"></mat-text-column>
-            <mat-text-column name="celularTitular" headerText="Celular Titular"></mat-text-column>
-            <mat-text-column name="nombreOcupante" headerText="Nombre Ocupante"></mat-text-column>
-            <mat-text-column name="emailOcupante" headerText="Email Ocupante"></mat-text-column>
-            <mat-text-column name="celularOcupante" headerText="Celular Ocupante"></mat-text-column>
-            <mat-text-column name="numeroHabitantes" headerText="Habitantes"></mat-text-column>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table> -->
+        <!-- ✅ Paginador -->
+        <mat-paginator [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 20]"
+                    showFirstLastButtons>
+        </mat-paginator>
 
     </section>
 </main>

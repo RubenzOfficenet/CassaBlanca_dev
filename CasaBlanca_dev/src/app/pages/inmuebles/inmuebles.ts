@@ -10,7 +10,7 @@ import { CurrencyPipe } from '@angular/common';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-inmuebles',
@@ -18,7 +18,8 @@ import { MatSort } from '@angular/material/sort';
     MatDialogModule,
     MatSortModule,
     CurrencyPipe,
-    MatTableModule],
+    MatTableModule,
+    MatPaginatorModule],
   templateUrl: './inmuebles.html',
   styleUrl: './inmuebles.css',
 })
@@ -41,11 +42,13 @@ export class Inmuebles implements AfterViewInit {
 
   dataSource = new MatTableDataSource<ICasas>([]);
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dialog: MatDialog, private _inmueblesServices: InmueblesServices) { }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit() {
