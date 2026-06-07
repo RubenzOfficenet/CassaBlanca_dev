@@ -11,6 +11,8 @@ import { CurrencyPipe } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-inmuebles',
@@ -19,7 +21,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     MatSortModule,
     CurrencyPipe,
     MatTableModule,
-    MatPaginatorModule],
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule],
   templateUrl: './inmuebles.html',
   styleUrl: './inmuebles.css',
 })
@@ -52,6 +56,13 @@ export class Inmuebles implements AfterViewInit {
   }
 
   ngOnInit() {
+    this.dataSource.filterPredicate = (data: ICasas, filter: string): boolean => {
+      const normalizedFilter = filter.trim().toLowerCase();
+
+      return (data.nombreTitular?.toLowerCase().includes(normalizedFilter) ?? false)
+        || (data.numeroCasa !== undefined && data.numeroCasa.toString().toLowerCase().includes(normalizedFilter))
+        || (data.nombreOcupante?.toLowerCase().includes(normalizedFilter) ?? false);
+    };
     this.cargaDatosInmuebles();
   }
 
@@ -59,6 +70,10 @@ export class Inmuebles implements AfterViewInit {
   totalRegistros?: number;
 
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   cargaDatosInmuebles() {
     this._inmueblesServices.getInmuebles().subscribe({

@@ -28,30 +28,32 @@
     </section>
 
     <!-- TABLA DE CONTROL OPERATIVO -->
+
+
+
     <section class="table-container">
         <div class="table-header-area">
             <div class="table-title">Directorio de Casas</div>
-            <select class="filter-select" style="padding: 6px 12px; font-size: 0.8rem;">
-                <option value="all-status">Todos los estados financieros</option>
-                <option value="clean">Al corriente</option>
-                <option value="debt">Con retraso</option>
-                <option value="empty">Deshabitadas</option>
-            </select>
+            <!-- Campo de búsqueda -->
+            <mat-form-field appearance="outline" style="width: 300px; margin-bottom: 0px;" class="campo-busqueda">
+                <mat-label>Buscar</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Escribe para filtrar">
+            </mat-form-field>
         </div>
 
         <!-- TABLA DE DATOS DE INMUEBLES -->
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
             <!-- Número de Casa -->
-            <ng-container matColumnDef="numeroCasa">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Casa </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.numeroCasa }} </td>
+            <ng-container matColumnDef="numeroCasa" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="texto-negrita">Número de Casa</th>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.numeroCasa }} </td>
             </ng-container>
 
             <!-- Cuota de Mantenimiento -->
             <ng-container matColumnDef="cuotaDeMantenimientoBase">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Cuota de Mantenimiento </th>
-                <td mat-cell *matCellDef="let casa">
+                <td mat-cell *matCellDef="let casa" class="table-td-text">
                     {{ casa.cuotaDeMantenimientoBase | currency:'':'symbol':'1.2-2' }}
                 </td>
             </ng-container>
@@ -59,49 +61,49 @@
             <!-- Estado -->
             <ng-container matColumnDef="estadoInicialOcupacion">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado de Ocupación </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.estadoInicialOcupacion }} </td>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.estadoInicialOcupacion }} </td>
             </ng-container>
 
             <!-- Titular -->
             <ng-container matColumnDef="nombreTitular">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Titular </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.nombreTitular || 'Sin titular' }} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="texto-negrita"> Titular </th>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.nombreTitular || 'Sin titular' }} </td>
             </ng-container>
 
             <!-- Email Titular -->
             <ng-container matColumnDef="emailTitular">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Titular </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.emailTitular || 'No registrado' }} </td>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.emailTitular || 'No registrado' }} </td>
             </ng-container>
 
             <!-- Celular Titular -->
             <ng-container matColumnDef="celularTitular">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular Titular </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.celularTitular || 'No registrado' }} </td>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.celularTitular || 'No registrado' }} </td>
             </ng-container>
 
             <!-- Ocupante -->
             <ng-container matColumnDef="nombreOcupante">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Ocupante </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.nombreOcupante || 'N/A' }} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="texto-negrita"> Ocupante </th>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.nombreOcupante || 'N/A' }} </td>
             </ng-container>
 
             <!-- Email Ocupante -->
             <ng-container matColumnDef="emailOcupante">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo Ocupante </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.emailOcupante || 'N/A' }} </td>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.emailOcupante || 'N/A' }} </td>
             </ng-container>
 
             <!-- Celular Ocupante -->
             <ng-container matColumnDef="celularOcupante">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular Ocupante </th>
-                <td mat-cell *matCellDef="let casa"> {{ casa.celularOcupante || 'N/A' }} </td>
+                <td mat-cell *matCellDef="let casa" class="table-td-text"> {{ casa.celularOcupante || 'N/A' }} </td>
             </ng-container>
 
             <!-- Habitantes -->
             <ng-container matColumnDef="numeroHabitantes">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Habitantes </th>
-                <td mat-cell *matCellDef="let casa" style="text-align: center;">
+                <td mat-cell *matCellDef="let casa" style="text-align: center;" class="table-td-text">
                     {{ casa.numeroHabitantes ?? 0 }}
                 </td>
             </ng-container>
@@ -110,10 +112,9 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         </table>
+
         <!-- ✅ Paginador -->
-        <mat-paginator [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
         </mat-paginator>
 
     </section>

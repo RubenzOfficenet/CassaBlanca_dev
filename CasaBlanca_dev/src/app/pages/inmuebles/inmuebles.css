@@ -68,7 +68,7 @@ header h1 {
 
 .metric-card {
     background-color: var(--bg-surface);
-    padding: 24px;
+    padding: 8px;
     border-radius: 12px;
     border: 1px solid var(--border-color);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -99,7 +99,7 @@ header h1 {
 }
 
 .table-header-area {
-    padding: 24px;
+    padding: 10px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
@@ -117,7 +117,7 @@ table {
     border-collapse: collapse;
 }
 
-th {
+/* th {
     background-color: #F8FAFC;
     padding: 12px 24px;
     color: var(--text-muted);
@@ -127,11 +127,10 @@ th {
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-}
+} */
 
 td {
-    padding: 16px 24px;
-    font-size: 0.875rem;
+    font-size: 15px;
     border-bottom: 1px solid var(--border-color);
     color: #334155;
 }
@@ -223,8 +222,29 @@ tr:last-child td {
     letter-spacing: 0.5px;
 }
 
-.card-value {
+.card-value {   
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: -0.5px;
 }
+
+.texto-negrita {
+  font-weight: bold;
+  color: rgb(168, 1, 15);
+}
+
+
+
+.campo-busqueda {
+  width: 300px;
+  background-color: #ffffff; /* fondo */
+  border-radius: 15px;        /* esquinas redondeadas */
+  height: 60px;
+}
+
+
+.table-td-text {
+  font-size: 12px; /* ajusta el tamaño */
+}
+
+
