@@ -1,5 +1,13 @@
+/* --- TUS VARIABLES (Asegúrate de tenerlas definidas) --- */
+:root {
+    --bg-surface: #ffffff;
+    --border-color: #E2E8F0;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --color-brand: #2563EB;
+}
 
-/* --- MAIN CONTENT AREA --- */
+/* --- TU CÓDIGO CSS ORIGINAL --- */
 .main-content {
     flex-grow: 1;
     overflow-y: auto;
@@ -10,10 +18,11 @@
 
 .form-container {
     width: 100%;
-    max-width: 680px;
+    max-width: 960px;
 }
 
-/* --- ENCABEZADO DE ACCIÓN --- */
+/* Ajustado a 960px para acomodar mejor las 3 columnas */
+
 .form-header {
     display: flex;
     align-items: center;
@@ -33,6 +42,7 @@
     font-weight: 500;
     background-color: var(--bg-surface);
     transition: all 0.15s;
+    text-decoration: none;
 }
 
 .btn-back:hover {
@@ -44,15 +54,17 @@
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.5px;
+    margin: 0;
 }
 
-/* --- TARJETA DEL FORMULARIO --- */
 .form-card {
     background-color: var(--bg-surface);
     border-radius: 12px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     padding: 32px;
+    box-shadow: 7px 9px 28px -14px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 7px 9px 28px -14px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 7px 9px 28px -14px rgba(0, 0, 0, 0.75);
 }
 
 .form-section {
@@ -70,21 +82,11 @@
     padding-bottom: 6px;
 }
 
-/* --- FILAS Y COLUMNAS --- */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
-
-.form-group.full-width {
-    grid-column: span 2;
+    margin-bottom: 1rem;
 }
 
 label {
@@ -93,9 +95,10 @@ label {
     color: var(--text-main);
 }
 
-/* --- INPUTS Y CONTROLES --- */
 input[type="text"],
 input[type="number"],
+input[type="email"],
+input[type="tel"],
 select,
 textarea {
     width: 100%;
@@ -116,20 +119,11 @@ textarea:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* Símbolos y sufijos dentro de inputs */
+/* Símbolos y sufijos */
 .input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-}
-
-.input-suffix {
-    position: absolute;
-    right: 14px;
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    pointer-events: none;
 }
 
 .input-prefix {
@@ -141,26 +135,23 @@ textarea:focus {
     pointer-events: none;
 }
 
-/* Ajustes de padding para elementos con iconos/sufijos */
-.has-suffix input {
-    padding-right: 45px;
-}
-
 .has-prefix input {
     padding-left: 28px;
 }
 
-
-
-.form-card {
-    background-color: var(--bg-surface);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    padding: 32px;
-box-shadow: 7px 9px 28px -14px rgba(0,0,0,0.75);
--webkit-box-shadow: 7px 9px 28px -14px rgba(0,0,0,0.75);
--moz-box-shadow: 7px 9px 28px -14px rgba(0,0,0,0.75);
+/* Botón de envío personalizado */
+.btn-submit {
+    background-color: var(--color-brand);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
 }
 
-
+.btn-submit:hover {
+    background-color: #1d4ed8;
+}

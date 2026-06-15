@@ -222,29 +222,40 @@ tr:last-child td {
     letter-spacing: 0.5px;
 }
 
-.card-value {   
+.card-value {
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: -0.5px;
 }
 
 .texto-negrita {
-  font-weight: bold;
-  color: rgb(168, 1, 15);
+    font-weight: bold;
+    color: rgb(168, 1, 15);
 }
 
 
 
 .campo-busqueda {
-  width: 300px;
-  background-color: #ffffff; /* fondo */
-  border-radius: 15px;        /* esquinas redondeadas */
-  height: 60px;
+    width: 300px;
+    background-color: #ffffff;
+    /* fondo */
+    border-radius: 15px;
+    /* esquinas redondeadas */
+    height: 60px;
 }
 
 
 .table-td-text {
-  font-size: 12px; /* ajusta el tamaño */
+    font-size: 12px;
+    /* ajusta el tamaño */
 }
 
 
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}

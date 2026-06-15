@@ -13,6 +13,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @Component({
   selector: 'app-inmuebles',
@@ -23,13 +29,18 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule, 
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule],
   templateUrl: './inmuebles.html',
   styleUrl: './inmuebles.css',
 })
 
 
 export class Inmuebles implements AfterViewInit {
+
+  isLoading = true; // al inicio está cargando
 
   displayedColumns: string[] = [
     'numeroCasa',
@@ -41,14 +52,24 @@ export class Inmuebles implements AfterViewInit {
     'nombreOcupante',
     'emailOcupante',
     'celularOcupante',
-    'numeroHabitantes'
+    'numeroHabitantes',
+    'acciones'
+
   ];
+
+  
+  
 
   dataSource = new MatTableDataSource<ICasas>([]);
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog, private _inmueblesServices: InmueblesServices) { }
+  casas = signal<ICasas[]>([]);
+  totalRegistros?: number;
+
+  constructor(private dialog: MatDialog, private _inmueblesServices: InmueblesServices) {
+
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -64,11 +85,8 @@ export class Inmuebles implements AfterViewInit {
         || (data.nombreOcupante?.toLowerCase().includes(normalizedFilter) ?? false);
     };
     this.cargaDatosInmuebles();
+    
   }
-
-  casas = signal<ICasas[]>([]);
-  totalRegistros?: number;
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -78,9 +96,10 @@ export class Inmuebles implements AfterViewInit {
   cargaDatosInmuebles() {
     this._inmueblesServices.getInmuebles().subscribe({
       next: (data) => {
-        console.log('Datos de inmuebles recibidos:', data);
+        //console.log('Datos de inmuebles recibidos:', data);
         this.dataSource.data = data;   // ✅ Actualizas los datos sin recrear el dataSource
         this.totalRegistros = data.length;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error al cargar los inmuebles:', err);
@@ -88,40 +107,29 @@ export class Inmuebles implements AfterViewInit {
     });
   }
 
-  // cargaDatosInmuebles() {
-  //   this._inmueblesServices.getInmuebles().subscribe({
-  //     next: (data) => {
-  //       this.casas.set(data);
-  //       this.totalRegistros = this.casas().length;
-  //       this.dataSource = new MatTableDataSource(this.casas());
-  //     },
-  //     error: (err) => {
-  //       console.error('Error al cargar los inmuebles:', err);
-  //     }
-  //   });
-  //   this.dataSource = new MatTableDataSource(this.casas());
-
-  // }
-
-
-
   abrirPopup() {
     const dialogRef = this.dialog.open(Nuevoinmueble, {
-      width: '40vw',       // 80% del ancho de la pantalla (Viewport Width)
-      maxWidth: '2000px',   // No crecerá más de 800px
-      minWidth: '320px',   // No se encogerá a menos de 320px
-      disableClose: false, // Evita que se cierre al hacer clic fuera o presionar Escape
+      width: '40vw',
+      maxWidth: '2000px',
+      minWidth: '320px',
+      disableClose: false,
       hasBackdrop: true,
       height: '700px'
     });
 
-    // Capturar el resultado cuando se cierre
     dialogRef.afterClosed().subscribe(result => {
-      console.log('El pop-up se cerró. Resultado:', result);
-      if (result === true) {
-        // El usuario hizo clic en "Aceptar"
+      if (result) {
+        console.log('Datos recibidos del popup:', result);
+        // Aquí puedes guardar en tu servicio o hacer un POST al backend
+      } else {
+        console.log('El usuario canceló');
       }
     });
+  }
+
+
+  editarCasa(casa: any){
+    console.log(casa);
   }
 
 }
