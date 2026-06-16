@@ -14,9 +14,26 @@
                         <div class="row row-cols-1 row-cols-md-3 g-3">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="NumeroCasa">Número de Casa</label>
+                                    <label for="NumeroCasa">Número de Casa <span class="mensaje-error">*</span> </label>
                                     <input type="text" id="NumeroCasa" formControlName="NumeroCasa"
                                         placeholder="Ej. A99" />
+                                    @if (
+                                        inmuebleForm.get('NumeroCasa')?.invalid &&
+                                        inmuebleForm.get('NumeroCasa')?.touched
+                                    ) {
+
+                                    <small class="text-danger">
+
+                                        @if (inmuebleForm.get('NumeroCasa')?.hasError('required')) {
+                                        El número de casa es obligatorio.
+                                        }
+
+                                        @if (inmuebleForm.get('NumeroCasa')?.hasError('pattern')) {
+                                        El número de casa no puede contener solo espacios.
+                                        }
+
+                                    </small>
+                                    }
                                 </div>
                             </div>
 
@@ -44,12 +61,12 @@
                                     <option [value]="-1" disabled>
                                         Seleccione un estado
                                     </option>
-                                    <select id="EstadoOcupacion" formControlName="EstadoOcupacion" >
+                                    <select id="EstadoOcupacion" formControlName="EstadoOcupacion">
                                         <option value="-1" disabled selected>Seleccione un estado</option>
                                         @for (estado of estadosOcupacion; track estado.id) {
-                                            <option [value]="estado.id">
-                                                {{ estado.estadoInicialOcupacion }}
-                                            </option>
+                                        <option [value]="estado.id">
+                                            {{ estado.estadoInicialOcupacion }}
+                                        </option>
                                         }
                                     </select>
                                 </div>
@@ -86,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="CelularTitular">Celular</label>
                                     <input type="tel" id="CelularTitular" formControlName="CelularTitular"
-                                        placeholder="Ej. 5512345678" />
+                                        placeholder="Ej. 5534567890" />
                                 </div>
                             </div>
 
@@ -120,14 +137,14 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="CelularOcupante">Celular</label>
-                                    <input type="tel" id="CelularOcupante" formControlName="CelularOcupante" />
+                                    <input type="tel" id="CelularOcupante" formControlName="CelularOcupante" placeholder="Ej. 5534567890" />
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="EmailOcupante">Correo Electrónico</label>
-                                    <input type="email" id="EmailOcupante" formControlName="EmailOcupante" />
+                                    <input type="email" id="EmailOcupante" formControlName="EmailOcupante"  placeholder="titular@correo.com"/>
                                 </div>
                             </div>
                         </div>
@@ -154,20 +171,10 @@
 
 <mat-dialog-actions align="end">
     <button mat-raised-button (click)="cancelar()">Cancelar</button>
-    <!-- <button mat-raised-button (click)="guardar()" color="primary">Guardar Registro</button> -->
     <button mat-raised-button (click)="mostrarConfirmacion()" color="primary">Guardar Registro</button>
 </mat-dialog-actions>
 
-<!-- <button
-  class="btn btn-danger"
-  (click)="mostrarConfirmacion()">
-  Eliminar
-</button> -->
 
-<app-confirm-dialog
-  #modalConfirmacion
-  [titulo]="'Guardar Datos'"
-  [mensaje]="'¿Estás seguro de guardar los datos?'"
-  (confirmado)="guardar()"
-  (cancelado)="onCancelar()">
+<app-confirm-dialog #modalConfirmacion [titulo]="'Guardar Datos'" [mensaje]="'¿Estás seguro de guardar los datos?'"
+    (confirmado)="guardar()" (cancelado)="onCancelar()">
 </app-confirm-dialog>

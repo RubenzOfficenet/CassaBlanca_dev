@@ -4,6 +4,8 @@ import { Observable, Observer } from 'rxjs';
 import { APP_CONSTANTS } from '../Constants/app.constants';
 import { ICasas } from '../Models/inmueble.model';
 import { IEstadosOcupacion } from '../interfaces/iestadosocupacion.interfase';
+import { ICasaCreate } from '../interfaces/icasa.interfase';
+
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +22,8 @@ export class InmueblesServices {
 
   getInmuebles(): Observable<ICasas[]> {
     var url = this._apiUrl + 'GetHouses';
+    console.log(url);
+    
     return this._http.get<ICasas[]>(url);
   }
 
@@ -28,4 +32,11 @@ export class InmueblesServices {
     return this._http.get<IEstadosOcupacion[]>(url);
   }
   
+
+  postCreateHouse(inmueble: ICasaCreate): Observable<any> {
+    var url = this._apiUrl + 'CreateHouse';
+    return this._http.post<any>(url, inmueble);
+  }
+
+
 }

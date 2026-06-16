@@ -3,7 +3,7 @@ import { MatDialogContent, MatDialogActions, MatDialogRef } from "@angular/mater
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ICasaCreate } from '../../../interfaces/icasa.interfase';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, Validators } from '@angular/forms';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IEstadosOcupacion } from '../../../interfaces/iestadosocupacion.interfase';
 import { InmueblesServices } from '../../../services/inmuebles-services';
@@ -12,10 +12,13 @@ import { ConfirmDialog } from "../../shared/confirm-dialog/confirm-dialog";
 import { convertCompilerOptionsFromJson } from 'typescript';
 import { CloseScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentResourceCollector } from '@angular/cdk/schematics';
+import { validate } from '@angular/forms/signals';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-nuevoinmueble',
-  imports: [MatDialogContent, MatDialogActions, MatDialogModule, MatButtonModule, FormsModule, ReactiveFormsModule, ConfirmDialog],
+  imports: [MatDialogContent, MatDialogActions, MatDialogModule, MatButtonModule, FormsModule, ReactiveFormsModule, ConfirmDialog, MatSnackBarModule],
   templateUrl: './nuevoinmueble.html',
   styleUrl: './nuevoinmueble.css',
 })
@@ -26,15 +29,17 @@ export class Nuevoinmueble {
   estadosOcupacion: IEstadosOcupacion[] = [];
   modalConfirmacion = viewChild<ConfirmDialog>('modalConfirmacion');
   nuevaCasa: ICasaCreate;
-
+  numeroCasaVacio: boolean = true;
 
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<Nuevoinmueble>,
     private _inmueblesServices: InmueblesServices,
-    private snackBar: MatSnackBar) {
 
+    private snackBar: MatSnackBar) {
     this.inmuebleForm = this.fb.group({
-      NumeroCasa: [''],
+      NumeroCasa: ['', [
+        Validators.required,
+        Validators.pattern(/^.*\S.*$/)]],
       Ubicacion: [''],
       CuotaDeMantenimientoBase: [''],
       EstadoOcupacion: [''],
@@ -68,12 +73,32 @@ export class Nuevoinmueble {
   }
 
   guardar() {
-    // Devuelve todo el objeto con los valores del formulario
-    //this.dialogRef.close(this.inmuebleForm.value);
+    // valida el formulario
+    if (this.inmuebleForm.invalid) {
+      this.inmuebleForm.markAllAsTouched();
+      this.numeroCasaVacio = true;
+      return;
+    }
 
+    debugger;
+    this.numeroCasaVacio = false;
     this.nuevaCasa = this.construirNuevaCasa();
-    console.log(this.nuevaCasa);
-    
+
+    this._inmueblesServices.postCreateHouse(this.nuevaCasa).subscribe({
+      next: (data) => {
+        this.estadosOcupacion = data;
+
+        if (data.length > 0) {
+          this.inmuebleForm.patchValue({
+            EstadoOcupacion: data[0].id
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar los Estados de Ocupacion:', err);
+      }
+    });
+
     this.dialogRef.close('Casa creada...');
 
   }
@@ -102,6 +127,20 @@ export class Nuevoinmueble {
   }
 
   mostrarConfirmacion(): void {
+    this.numeroCasaVacio = true;
+    if (this.inmuebleForm.get('NumeroCasa')?.invalid) {      
+      this.snackBar.open(
+        'Debe capturar el Número de Casa.',
+        'Cerrar',
+        {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        }
+      );      
+      return;
+    }
+
     this.modalConfirmacion()?.abrir();
   }
 
@@ -124,6 +163,8 @@ export class Nuevoinmueble {
       celularTitular: f.CelularTitular,
       observaciones: f.Observaciones
     };
+
+
   }
 
 }
