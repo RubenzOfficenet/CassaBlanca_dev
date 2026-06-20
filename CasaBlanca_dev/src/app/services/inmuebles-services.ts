@@ -5,6 +5,7 @@ import { APP_CONSTANTS } from '../Constants/app.constants';
 import { ICasas } from '../Models/inmueble.model';
 import { IEstadosOcupacion } from '../interfaces/iestadosocupacion.interfase';
 import { ICasaCreate } from '../interfaces/icasa.interfase';
+import { InmuebleEditarDTO } from '../Models/InmuebleEditarDTO.model';
 
 
 @Injectable({
@@ -16,7 +17,8 @@ export class InmueblesServices {
   private readonly _apiUrl = APP_CONSTANTS.URL_LOCAL;
 
 
-  Casas: ICasas[] = [];
+  //Casas: ICasas[] = [];
+  //casaById? : InmuebleEditarDTO;
 
   constructor() {}
 
@@ -36,6 +38,11 @@ export class InmueblesServices {
   postCreateHouse(inmueble: ICasaCreate): Observable<any> {
     var url = this._apiUrl + 'CreateHouse';
     return this._http.post<any>(url, inmueble);
+  }
+
+getInuebleById(id : number): Observable<InmuebleEditarDTO> {
+    var url = this._apiUrl + 'GetHouseById/' + id;
+    return this._http.get<any>(url);
   }
 
 

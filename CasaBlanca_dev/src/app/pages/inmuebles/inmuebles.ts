@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, signal, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Editarinmueble } from './editarinmueble/editarinmueble';
 
 
 @Component({
@@ -68,7 +69,7 @@ export class Inmuebles implements AfterViewInit {
   totalRegistros?: number;
 
   constructor(private dialog: MatDialog, private _inmueblesServices: InmueblesServices) {
-
+    
   }
 
   ngAfterViewInit() {
@@ -100,6 +101,8 @@ export class Inmuebles implements AfterViewInit {
         this.dataSource.data = data;   // ✅ Actualizas los datos sin recrear el dataSource
         this.totalRegistros = data.length;
         this.isLoading = false;
+        console.log("Se cargaron los datos de los inmuebles");
+        
       },
       error: (err) => {
         console.error('Error al cargar los inmuebles:', err);
@@ -120,7 +123,7 @@ export class Inmuebles implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Datos recibidos del popup:', result);
-        // Aquí puedes guardar en tu servicio o hacer un POST al backend
+        this.cargaDatosInmuebles();
       } else {
         console.log('El usuario canceló');
       }
@@ -128,8 +131,30 @@ export class Inmuebles implements AfterViewInit {
   }
 
 
-  editarCasa(casa: any){
+  editarCasa(casa: number){
+
     console.log(casa);
+
+    const dialogRef = this.dialog.open(Editarinmueble, {
+      width: '40vw',
+      maxWidth: '2000px',
+      minWidth: '320px',
+      disableClose: false,
+      hasBackdrop: true,
+      height: '700px',
+      data : {
+        id : casa
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Datos recibidos del popup:', result);
+        this.cargaDatosInmuebles();
+      } else {
+        console.log('El usuario canceló');
+      }
+    });    
   }
 
 }

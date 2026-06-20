@@ -9,10 +9,6 @@ import { IEstadosOcupacion } from '../../../interfaces/iestadosocupacion.interfa
 import { InmueblesServices } from '../../../services/inmuebles-services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialog } from "../../shared/confirm-dialog/confirm-dialog";
-import { convertCompilerOptionsFromJson } from 'typescript';
-import { CloseScrollStrategy } from '@angular/cdk/overlay';
-import { ComponentResourceCollector } from '@angular/cdk/schematics';
-import { validate } from '@angular/forms/signals';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
@@ -56,17 +52,46 @@ export class Nuevoinmueble {
     });
 
     this.nuevaCasa = {
-      numeroCasa: '',
-      ubicacion: '',
-      cuotaDeMantenimientoBase: 0,
-      estadoOcupacion: 0,
-      nombreTitular: '',
-      apellidosTitular: '',
-      emailTitular: '',
-      celularTitular: '',
-      observaciones: ''
+    numeroCasa: '',
+    ubicacion: '',
+    cuotaDeMantenimientoBase: 0,
+    estadoOcupacion: 0,
+    nombreTitular: '',
+    apellidosTitular: '',
+    emailTitular: '',
+    celularTitular: '',
+    nombreOcupante: '',
+    apellidosOcupante: '',
+    emailOcupante: '',
+    celularOcupante: '',
+    numeroHabitantes: 0,
+    observaciones: '',
     }
   }
+
+  private construirNuevaCasa(): ICasaCreate {
+    const f = this.inmuebleForm.getRawValue();
+
+    return {
+      numeroCasa: f.NumeroCasa,
+      ubicacion: f.Ubicacion,
+      cuotaDeMantenimientoBase: Number(f.CuotaDeMantenimientoBase),
+      estadoOcupacion: f.EstadoOcupacion ? Number(f.EstadoOcupacion) : undefined,
+      nombreTitular: f.NombreTitular,
+      apellidosTitular: f.ApellidosTitular,
+      emailTitular: f.EmailTitular,
+      celularTitular: f.CelularTitular,
+      nombreOcupante: f.NombreOcupante,
+      apellidosOcupante: f.ApellidosOcupante,
+      emailOcupante: f.EmailOcupante,
+      celularOcupante: f.CelularOcupante,
+      numeroHabitantes:  Number(f.NumeroHabitantes),
+      observaciones: f.Observaciones
+    };
+
+
+  }
+
 
   ngOnInit() {
     this.getEstadosOcupacion();
@@ -77,10 +102,10 @@ export class Nuevoinmueble {
     if (this.inmuebleForm.invalid) {
       this.inmuebleForm.markAllAsTouched();
       this.numeroCasaVacio = true;
+      
       return;
     }
 
-    debugger;
     this.numeroCasaVacio = false;
     this.nuevaCasa = this.construirNuevaCasa();
 
@@ -100,7 +125,6 @@ export class Nuevoinmueble {
     });
 
     this.dialogRef.close('Casa creada...');
-
   }
 
 
@@ -149,22 +173,6 @@ export class Nuevoinmueble {
   }
 
 
-  private construirNuevaCasa(): ICasaCreate {
-    const f = this.inmuebleForm.getRawValue();
 
-    return {
-      numeroCasa: f.NumeroCasa,
-      ubicacion: f.Ubicacion,
-      cuotaDeMantenimientoBase: Number(f.CuotaDeMantenimientoBase),
-      estadoOcupacion: f.EstadoOcupacion ? Number(f.EstadoOcupacion) : undefined,
-      nombreTitular: f.NombreTitular,
-      apellidosTitular: f.ApellidosTitular,
-      emailTitular: f.EmailTitular,
-      celularTitular: f.CelularTitular,
-      observaciones: f.Observaciones
-    };
-
-
-  }
 
 }

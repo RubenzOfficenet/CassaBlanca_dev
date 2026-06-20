@@ -1,4 +1,5 @@
-export interface ICasaCreate {
+export interface InmuebleEditarDTO {
+    id: number;
     numeroCasa?: string;
     ubicacion?: string;
     cuotaDeMantenimientoBase: number;
@@ -11,6 +12,7 @@ export interface ICasaCreate {
     apellidosOcupante?: string;
     emailOcupante?: string;
     celularOcupante?: string;
-    numeroHabitantes: number;
+    numeroHabitantes?: number;
     observaciones?: string;
+
 }

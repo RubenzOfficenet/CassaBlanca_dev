@@ -1,5 +1,8 @@
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+
 /* --- TUS VARIABLES (Asegúrate de tenerlas definidas) --- */
 :root {
     --bg-surface: #ffffff;
@@ -164,4 +167,11 @@ textarea:focus {
     color: red;
     font-size: 12px;
     margin-right: 25px;
+}
+
+
+input:read-only {
+    background-color: #f0f0f0;
+    color: #555555;
+    cursor: not-allowed;
 }
